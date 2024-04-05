@@ -1,36 +1,45 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useRef } from 'react';
-import { createCircle } from '../../utils/functions/canvFunctions';
-import { Circle } from '../../utils/functions/canvClasses';
+import { Circle } from '../../utils/functions/Circle';
+import { circleClickHandle, getJobs } from '../../utils/functions/canvFunctions';
+import {
+  CANVAS_CENTER,
+  CANVAS_HEIGHT,
+  CANVAS_WIdTH,
+  INERNAL_LINE_WIDTH,
+  INERNAL_RADIUS,
+  INTERNAL_CIRCLE_COLOR
+} from '../../utils/constants.js/constants';
+import { JobCircle } from '../../utils/functions/JobCircle';
 
 export const MainCanv = () => {
   const canvas = useRef();
 
-  const circles = [
-    { x: 100, y: 100, r: 50, circleColor: '#000' },
-    { x: 300, y: 100, r: 50, circleColor: '#000' }
-  ];
+  const internalCercle = new Circle({
+    x: CANVAS_CENTER,
+    y: CANVAS_CENTER,
+    r: INERNAL_RADIUS,
+    fillColor: null,
+    lineColor: INTERNAL_CIRCLE_COLOR,
+    lineWidth: INERNAL_LINE_WIDTH
+  });
 
-  const cirkleClickHandle = (e, ctx, canvasEle, circles) => {
-    const { clientX, clientY } = e;
-    console.log(clientX, clientY);
-    const boundingClientRect = canvasEle.getBoundingClientRect();
-    const x = clientX - boundingClientRect.left;
-    const y = clientY - boundingClientRect.top;
-  };
+  const jobCercales = getJobs().map(j => new JobCircle(j));
+
+  let canvasEle = null;
+  let ctx = null;
 
   useEffect(() => {
-    let canvasEle = canvas.current;
-    canvasEle.width = 750;
-    canvasEle.height = 750;
-    const ctx = canvasEle.getContext('2d');
-    canvasEle.addEventListener('click', e => cirkleClickHandle(e, ctx, canvasEle, circles));
+    canvasEle = canvas.current;
+    canvasEle.width = CANVAS_WIdTH;
+    canvasEle.height = CANVAS_HEIGHT;
+    ctx = canvasEle.getContext('2d');
 
-    const cercle1 = new Circle(circles[0]);
-    cercle1.drow(ctx);
-    const cercle2 = new Circle(circles[1]);
-    cercle2.drow(ctx);
-  }, [circles]);
+    jobCercales.forEach(j => {
+      j.drow(ctx);
+    });
+    internalCercle.drow(ctx);
+  }, [jobCercales]);
 
-  return <canvas ref={canvas} />;
+  return <canvas ref={canvas} onClick={e => circleClickHandle(e, ctx, canvasEle, jobCercales)} />;
 };
