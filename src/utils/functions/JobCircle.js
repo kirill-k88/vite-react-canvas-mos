@@ -1,33 +1,59 @@
-import { Circle } from './Circle';
+import { SkillCircle } from './SkillCircle';
 
-export class JobCircle extends Circle {
-  constructor({ x, y, r, lineColor, fillColor, lineWidth, fillActive, lineActive }) {
-    super({ x, y, r, lineColor, fillColor, lineWidth });
+export class JobCircle extends SkillCircle {
+  constructor(
+    { x, y, r, lineColor, fillColor, lineWidth, fillActive, lineActive, activeR, backColor },
+    isFilled
+  ) {
+    super({ x, y, r, lineColor, fillColor, lineWidth }, isFilled);
     this.fillActive = fillActive;
     this.lineActive = lineActive;
+    this.activeR = activeR;
+    this.backColor = backColor;
   }
 
   activate() {
-    if (this.fillActive) {
-      this.drow(this.ctx);
-      this.ctx.fillStyle = this.fillActive;
-      this.ctx.fill();
-    }
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, this.activeR, 0, Math.PI * 2, false);
+    this.activeFillBack();
+    this.finishDrow();
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
+    this.activeFill();
+    this.finishDrow();
   }
 
   disactivate() {
-    this.drow(this.ctx);
-    this.ctx.fillColor = this.fillColor;
-    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, this.activeR, 0, Math.PI * 2, false);
+    this.inactiveFillBack();
+    this.finishDrow();
+    super.disactivate();
   }
 
-  hasClicked(xmouse, ymouse, clickHandle) {
-    const dist = Math.sqrt((xmouse - this.x) ** 2 + (ymouse - this.y) ** 2);
-    if (dist < this.r) {
-      this.activate();
-      return true;
+  activeFillBack() {
+    if (this.isFilled) {
+      this.ctx.fillStyle = this.backColor;
+      this.ctx.fill();
     }
-    this.disactivate();
-    return false;
+
+    if (this.lineActive) {
+      this.ctx.strokeStyle = this.lineActive;
+    }
+
+    this.ctx.lineWidth = this.lineWidth;
+  }
+
+  inactiveFillBack() {
+    if (this.isFilled) {
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0)';
+      this.ctx.fill();
+    }
+
+    if (this.lineActive) {
+      this.ctx.strokeStyle = 'rgba(0, 0, 0, 0)';
+    }
+
+    this.ctx.lineWidth = this.lineWidth;
   }
 }
