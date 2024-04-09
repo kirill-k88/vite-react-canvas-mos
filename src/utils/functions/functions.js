@@ -5,6 +5,8 @@ import {
   CANVAS_CENTER,
   CANVAS_WIdTH,
   DATA,
+  EXTERNAL_CIRCLE_COLOR,
+  EXTERNAL_LINE_WIDTH,
   EXTERNAL_RADIUS,
   EXTERNAL_TEXT_ACTIVE_COLOR,
   EXTERNAL_TEXT_COLOR,
@@ -13,6 +15,8 @@ import {
   EXTERNAL_TEXT_RADIUS,
   INACTIVE_JOB_COLOR,
   INACTIVE_SKILL_COLOR,
+  INTERNAL_CIRCLE_COLOR,
+  INTERNAL_LINE_WIDTH,
   INTERNAL_RADIUS,
   INTERNAL_TEXT_ACTIVE_COLOR,
   INTERNAL_TEXT_COLOR,
@@ -25,6 +29,7 @@ import {
   SKILL_LINE_WIDTH,
   SKILL_RADIUS
 } from '../constants.js/constants';
+import { Circle } from '../classes/Circle';
 
 const getAllSkills = () => {
   const skillList = [];
@@ -51,6 +56,7 @@ export const getSkillsParams = () => {
     const y = EXTERNAL_RADIUS * Math.sin(angle * i) + CANVAS_CENTER;
 
     return {
+      text: skill,
       x,
       y,
       r: SKILL_RADIUS,
@@ -73,6 +79,9 @@ export const getJobs = () => {
     const y = INTERNAL_RADIUS * Math.sin(angle * i) + CANVAS_CENTER;
 
     return {
+      text: job.name,
+      mainSkills: job.mainSkills,
+      otherSkills: job.otherSkills,
       x,
       y,
       r: JOB_RADIUS,
@@ -131,3 +140,29 @@ export const getJobTextParams = () => {
 
   return jobTexts;
 };
+
+export const getInternalCircle = () =>
+  new Circle(
+    {
+      x: CANVAS_CENTER,
+      y: CANVAS_CENTER,
+      r: INTERNAL_RADIUS,
+      fillColor: null,
+      lineColor: INTERNAL_CIRCLE_COLOR,
+      lineWidth: INTERNAL_LINE_WIDTH
+    },
+    false
+  );
+
+export const getExternalCircle = () =>
+  new Circle(
+    {
+      x: CANVAS_CENTER,
+      y: CANVAS_CENTER,
+      r: EXTERNAL_RADIUS,
+      fillColor: null,
+      lineColor: EXTERNAL_CIRCLE_COLOR,
+      lineWidth: EXTERNAL_LINE_WIDTH
+    },
+    false
+  );

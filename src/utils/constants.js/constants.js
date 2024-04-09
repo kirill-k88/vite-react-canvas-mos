@@ -3,7 +3,7 @@ export const INTERNAL_LINE_WIDTH = 2.35;
 export const INTERNAL_CIRCLE_COLOR = '#ADADAD';
 
 export const INTERNAL_TEXT_RADIUS = 190;
-export const INTERNAL_TEXT_FONT = 'normal 700 10px sans-serif';
+export const INTERNAL_TEXT_FONT = 'bold 10px sans-serif';
 export const INTERNAL_TEXT_COLOR = '#3A3A3A';
 export const INTERNAL_TEXT_ACTIVE_COLOR = '#3A3A3A';
 export const INTERNAL_TEXT_LINEHEIGHT = '10';

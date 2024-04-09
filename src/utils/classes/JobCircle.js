@@ -2,10 +2,26 @@ import { SkillCircle } from './SkillCircle';
 
 export class JobCircle extends SkillCircle {
   constructor(
-    { x, y, r, lineColor, fillColor, lineWidth, fillActive, lineActive, activeR, backColor },
+    {
+      text,
+      mainSkills,
+      otherSkills,
+      x,
+      y,
+      r,
+      lineColor,
+      fillColor,
+      lineWidth,
+      fillActive,
+      lineActive,
+      activeR,
+      backColor
+    },
     isFilled
   ) {
-    super({ x, y, r, lineColor, fillColor, lineWidth }, isFilled);
+    super({ text, x, y, r, lineColor, fillColor, lineWidth }, isFilled);
+    this.mainSkills = mainSkills;
+    this.otherSkills = otherSkills;
     this.fillActive = fillActive;
     this.lineActive = lineActive;
     this.activeR = activeR;
@@ -23,12 +39,8 @@ export class JobCircle extends SkillCircle {
     this.finishDrow();
   }
 
-  disactivate() {
-    this.ctx.beginPath();
-    this.ctx.arc(this.x, this.y, this.activeR, 0, Math.PI * 2, false);
-    this.inactiveFillBack();
-    this.finishDrow();
-    super.disactivate();
+  getRelations() {
+    return [...this.mainSkills, ...this.otherSkills];
   }
 
   activeFillBack() {
@@ -39,19 +51,6 @@ export class JobCircle extends SkillCircle {
 
     if (this.lineActive) {
       this.ctx.strokeStyle = this.lineActive;
-    }
-
-    this.ctx.lineWidth = this.lineWidth;
-  }
-
-  inactiveFillBack() {
-    if (this.isFilled) {
-      this.ctx.fillStyle = 'rgba(0, 0, 0, 0)';
-      this.ctx.fill();
-    }
-
-    if (this.lineActive) {
-      this.ctx.strokeStyle = 'rgba(0, 0, 0, 0)';
     }
 
     this.ctx.lineWidth = this.lineWidth;

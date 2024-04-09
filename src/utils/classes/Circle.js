@@ -1,5 +1,6 @@
 export class Circle {
-  constructor({ x, y, r, lineColor, fillColor, lineWidth }, isFilled) {
+  constructor({ text, x, y, r, lineColor, fillColor, lineWidth }, isFilled) {
+    this.text = text;
     this.x = x;
     this.y = y;
     this.r = r;

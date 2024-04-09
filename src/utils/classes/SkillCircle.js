@@ -1,8 +1,11 @@
 import { Circle } from './Circle';
 
 export class SkillCircle extends Circle {
-  constructor({ x, y, r, lineColor, fillColor, lineWidth, fillActive, lineActive }, isFilled) {
-    super({ x, y, r, lineColor, fillColor, lineWidth }, isFilled);
+  constructor(
+    { text, x, y, r, lineColor, fillColor, lineWidth, fillActive, lineActive },
+    isFilled
+  ) {
+    super({ text, x, y, r, lineColor, fillColor, lineWidth }, isFilled);
     this.fillActive = fillActive;
     this.lineActive = lineActive;
   }
@@ -10,12 +13,6 @@ export class SkillCircle extends Circle {
   activate() {
     this.startDrow();
     this.activeFill();
-    this.finishDrow();
-  }
-
-  disactivate() {
-    this.startDrow();
-    this.fill();
     this.finishDrow();
   }
 
@@ -35,10 +32,12 @@ export class SkillCircle extends Circle {
   hasClicked(xmouse, ymouse) {
     const dist = Math.sqrt((xmouse - this.x) ** 2 + (ymouse - this.y) ** 2);
     if (dist < this.r) {
-      this.activate();
       return true;
     }
-    this.disactivate();
     return false;
+  }
+
+  isInlList(skillList) {
+    return skillList.includes(this.text);
   }
 }
