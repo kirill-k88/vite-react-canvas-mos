@@ -36,6 +36,12 @@ export const ACTIVE_SKILL_COLOR = '#FF7A00';
 export const INACTIVE_SKILL_COLOR = '#FFD4AD';
 export const ACTIVE_SKILL_BACKCOLOR = '#FFF';
 
+export const MAIN_LINE = '#FF7A00';
+export const MAIN_LINE_WIDTH = '2';
+
+export const OTHER_LINE = '#8F59B9';
+export const OTHER_LINE_WIDTH = '2';
+
 export const DATA = [
   {
     name: 'Финансовый аналитик',

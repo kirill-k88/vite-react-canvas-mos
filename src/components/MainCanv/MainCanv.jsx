@@ -42,7 +42,6 @@ export const MainCanv = () => {
       skills
     };
 
-    context.save();
     redrowFigures(context, canvasElement, figures);
 
     function clickhandle(e) {
@@ -56,10 +55,5 @@ export const MainCanv = () => {
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvas}
-      className={styles.canv}
-    />
-  );
+  return <canvas ref={canvas} className={styles.canv} />;
 };

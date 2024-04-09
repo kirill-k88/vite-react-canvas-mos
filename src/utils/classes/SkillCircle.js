@@ -79,8 +79,10 @@ export class SkillCircle extends Circle {
     return false;
   }
 
-  isInlList(skillList) {
-    return skillList.includes(this.text);
+  isInlList(mainList, otherList) {
+    if (mainList.includes(this.text)) return 1;
+    if (otherList.includes(this.text)) return 2;
+    return 0;
   }
 
   getAllJobs() {
