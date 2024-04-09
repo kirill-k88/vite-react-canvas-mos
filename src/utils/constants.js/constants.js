@@ -23,22 +23,23 @@ export const CANVAS_HEIGHT = 750;
 export const CANVAS_CENTER = 375;
 
 export const JOB_RADIUS = 10.85;
-//export const JOB_ACTIVE_RADIUS = 14.86;
-export const JOB_ACTIVE_RADIUS = 18;
+export const JOB_ACTIVE_RADIUS = 14.86;
 export const JOB_LINE_WIDTH = 1;
 export const ACTIVE_JOB_COLOR = '#00A372';
 export const ACTIVE_JOB_BACKCOLOR = '#FFF';
 export const INACTIVE_JOB_COLOR = '#ADADAD';
 
-export const SKILL_RADIUS = 11.85;
-export const SKILL_LINE_WIDTH = 0;
+export const SKILL_RADIUS = 10.85;
+export const SKILL_ACTIVE_RADIUS = 14.86;
+export const SKILL_LINE_WIDTH = 1;
 export const ACTIVE_SKILL_COLOR = '#FF7A00';
 export const INACTIVE_SKILL_COLOR = '#FFD4AD';
+export const ACTIVE_SKILL_BACKCOLOR = '#FFF';
 
 export const DATA = [
   {
     name: 'Финансовый аналитик',
-    mainSkills: ['Excel', 'SQL', 'VBA', '1С'],
+    mainSkills: ['Excel', 'SQL', 'VBA', '1C'],
     otherSkills: ['Power BI', 'Python']
   },
   {

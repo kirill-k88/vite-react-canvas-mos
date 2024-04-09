@@ -16,7 +16,7 @@ export const circleClickHandle = (e, ctx, canvasEl, figures) => {
           skillsTexts[j].activate();
         }
         if (skillCircles[j].isInlList(jobCircles[i].getRelations())) {
-          skillCircles[j].activate();
+          skillCircles[j].highlight();
         }
       }
       break;
@@ -25,12 +25,18 @@ export const circleClickHandle = (e, ctx, canvasEl, figures) => {
 
   for (let i = 0; i < skillCircles.length; i++) {
     if (skillCircles[i].hasClicked(x, y)) {
+      const skill = skillCircles[i];
       redrowFigures(ctx, canvasEl, figures);
-      skillCircles[i].activate();
+      skill.activate();
       for (let j = 0; j < skillsTexts.length; j++) {
-        if (skillsTexts[j].isActivated(skillCircles[i].text)) {
+        if (skillsTexts[j].isActivated(skill.text)) {
           skillsTexts[j].activate();
           break;
+        }
+      }
+      for (let j = 0; j < jobCircles.length; j++) {
+        if (jobCircles[j].isInlList(skill.getAllJobs())) {
+          jobCircles[j].highlight();
         }
       }
       break;

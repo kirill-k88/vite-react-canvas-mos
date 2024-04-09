@@ -2,21 +2,63 @@ import { Circle } from './Circle';
 
 export class SkillCircle extends Circle {
   constructor(
-    { text, x, y, r, lineColor, fillColor, lineWidth, fillActive, lineActive },
+    {
+      text,
+      mainJob,
+      otherJob,
+      x,
+      y,
+      r,
+      lineColor,
+      fillColor,
+      lineWidth,
+      fillActive,
+      lineActive,
+      activeR,
+      backColor
+    },
     isFilled
   ) {
     super({ text, x, y, r, lineColor, fillColor, lineWidth }, isFilled);
     this.fillActive = fillActive;
     this.lineActive = lineActive;
+    this.activeR = activeR;
+    this.backColor = backColor;
+    this.mainJob = mainJob;
+    this.otherJob = otherJob;
   }
 
   activate() {
-    this.startDrow();
-    this.activeFill();
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, this.activeR, 0, Math.PI * 2, false);
+    this.activeFillBack();
+    this.finishDrow();
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
+    this.highlightFill();
     this.finishDrow();
   }
 
-  activeFill() {
+  activeFillBack() {
+    if (this.isFilled) {
+      this.ctx.fillStyle = this.backColor;
+      this.ctx.fill();
+    }
+
+    if (this.lineActive) {
+      this.ctx.strokeStyle = this.lineActive;
+    }
+
+    this.ctx.lineWidth = this.lineWidth;
+  }
+
+  highlight() {
+    this.startDrow();
+    this.highlightFill();
+    this.finishDrow();
+  }
+
+  highlightFill() {
     if (this.isFilled) {
       this.ctx.fillStyle = this.fillActive;
       this.ctx.fill();
@@ -39,5 +81,9 @@ export class SkillCircle extends Circle {
 
   isInlList(skillList) {
     return skillList.includes(this.text);
+  }
+
+  getAllJobs() {
+    return [...this.mainJob, ...this.otherJob];
   }
 }

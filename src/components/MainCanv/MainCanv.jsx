@@ -5,11 +5,13 @@ import { JobCircle } from '../../utils/classes/JobCircle';
 import styles from './MainCanv.module.scss';
 import {
   getSkillsParams,
+  getAllSkills,
   getJobs,
   getSkillsTextParams,
   getJobTextParams,
   getInternalCircle,
-  getExternalCircle
+  getExternalCircle,
+  getSkillDictionary
 } from '../../utils/functions/functions';
 import { Text } from '../../utils/classes/Text';
 import { SkillCircle } from '../../utils/classes/SkillCircle';
@@ -22,7 +24,9 @@ export const MainCanv = () => {
 
   const jobCircles = getJobs().map(j => new JobCircle(j, true));
   const jobTexts = getJobTextParams().map(j => new Text(j, true));
-  const skillCircles = getSkillsParams().map(j => new SkillCircle(j, true));
+  const skills = getAllSkills();
+  const skillDictionary = getSkillDictionary(skills);
+  const skillCircles = getSkillsParams(skills, skillDictionary).map(j => new SkillCircle(j, true));
   const skillsTexts = getSkillsTextParams().map(t => new Text(t, true));
 
   useLayoutEffect(() => {
@@ -34,7 +38,8 @@ export const MainCanv = () => {
       skillCircles,
       skillsTexts,
       internalCircle,
-      externalCircle
+      externalCircle,
+      skills
     };
 
     context.save();

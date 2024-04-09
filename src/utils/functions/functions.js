@@ -1,6 +1,7 @@
 import {
   ACTIVE_JOB_BACKCOLOR,
   ACTIVE_JOB_COLOR,
+  ACTIVE_SKILL_BACKCOLOR,
   ACTIVE_SKILL_COLOR,
   CANVAS_CENTER,
   CANVAS_WIdTH,
@@ -26,12 +27,13 @@ import {
   JOB_ACTIVE_RADIUS,
   JOB_LINE_WIDTH,
   JOB_RADIUS,
+  SKILL_ACTIVE_RADIUS,
   SKILL_LINE_WIDTH,
   SKILL_RADIUS
 } from '../constants.js/constants';
 import { Circle } from '../classes/Circle';
 
-const getAllSkills = () => {
+export const getAllSkills = () => {
   const skillList = [];
   DATA.forEach(j => {
     j.mainSkills.forEach(ms => {
@@ -47,8 +49,39 @@ const getAllSkills = () => {
   return Array.from(skillSet);
 };
 
-export const getSkillsParams = () => {
-  const skills = getAllSkills();
+export const getSkillDictionary = allSkills => {
+  const dictionary = {};
+  allSkills.forEach(s => {
+    DATA.forEach(j => {
+      if (j.mainSkills.includes(s)) {
+        if (dictionary[s]) {
+          if (dictionary[s].main) {
+            dictionary[s].main.push(j.name);
+          } else {
+            dictionary[s].main = [j.name];
+          }
+        } else {
+          dictionary[s] = { main: [j.name] };
+        }
+      }
+      if (j.otherSkills.includes(s)) {
+        if (dictionary[s]) {
+          if (dictionary[s].other) {
+            dictionary[s].other.push(j.name);
+          } else {
+            dictionary[s].other = [j.name];
+          }
+        } else {
+          dictionary[s] = { other: [j.name] };
+        }
+      }
+    });
+  });
+
+  return dictionary;
+};
+
+export const getSkillsParams = (skills, skillDictionary) => {
   const angle = (2 * Math.PI) / skills.length;
 
   const circles = skills.map((skill, i) => {
@@ -57,6 +90,8 @@ export const getSkillsParams = () => {
 
     return {
       text: skill,
+      mainJob: skillDictionary[skill].main || [],
+      otherJob: skillDictionary[skill].other || [],
       x,
       y,
       r: SKILL_RADIUS,
@@ -64,7 +99,9 @@ export const getSkillsParams = () => {
       lineColor: INACTIVE_SKILL_COLOR,
       lineWidth: SKILL_LINE_WIDTH,
       fillActive: ACTIVE_SKILL_COLOR,
-      lineActive: ACTIVE_SKILL_COLOR
+      lineActive: ACTIVE_SKILL_COLOR,
+      activeR: SKILL_ACTIVE_RADIUS,
+      backColor: ACTIVE_SKILL_BACKCOLOR
     };
   });
 
