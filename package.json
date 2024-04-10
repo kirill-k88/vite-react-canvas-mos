@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://kirill-k88.github.io/vite-react-canvas-mos/",
   "scripts": {
     "start": "vite",
     "build": "vite build",
