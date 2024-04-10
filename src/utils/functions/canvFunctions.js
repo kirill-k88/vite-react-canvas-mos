@@ -15,29 +15,31 @@ export const circleClickHandle = (e, ctx, canvasEl, figures) => {
   const { jobCircles, skillCircles, skillsTexts, jobTexts } = figures;
 
   for (let i = 0; i < jobCircles.length; i++) {
-    if (jobCircles[i].hasClicked(x, y)) {
+    const job = jobCircles[i];
+    if (job.hasClicked(x, y)) {
       redrowFigures(ctx, canvasEl, figures);
-      jobCircles[i].activate();
+      job.activate();
       for (let j = 0; j < skillsTexts.length; j++) {
-        const isInSkills = skillCircles[j].isInlList(
-          jobCircles[i].mainSkills,
-          jobCircles[i].otherSkills
-        );
+        const isInSkills = skillCircles[j].isInlList(job.mainSkills, job.otherSkills);
         if (isInSkills) {
           skillCircles[j].highlight();
           drowLine(
-            jobCircles[i].x,
-            jobCircles[i].y,
+            job.x,
+            job.y,
+            job.activeR,
             skillCircles[j].x,
             skillCircles[j].y,
+            skillCircles[j].r,
             ctx,
             isInSkills === 1 ? [MAIN_LINE, MAIN_LINE_WIDTH] : [OTHER_LINE, OTHER_LINE_WIDTH]
           );
         }
-        jobTextsDrow(jobTexts, ctx);
-        if (skillsTexts[j].isActivated(jobCircles[i].getRelations())) {
+        if (skillsTexts[j].isActivated(job.getRelations())) {
           skillsTexts[j].activate();
         }
+      }
+      if (jobTexts[i].isActivated(job.text)) {
+        jobTexts[i].activate();
       }
       return;
     }
@@ -55,8 +57,10 @@ export const circleClickHandle = (e, ctx, canvasEl, figures) => {
           drowLine(
             jobCircles[j].x,
             jobCircles[j].y,
+            jobCircles[j].r,
             skill.x,
             skill.y,
+            skill.activeR,
             ctx,
             isInJob === 1 ? [MAIN_LINE, MAIN_LINE_WIDTH] : [OTHER_LINE, OTHER_LINE_WIDTH]
           );
@@ -122,11 +126,20 @@ export const skillTextsDrow = (skillsTexts, context) => {
   });
 };
 
-export const drowLine = (x1, y1, x2, y2, ctx, lineStyle) => {
+export const drowLine = (x1, y1, r1, x2, y2, r2, ctx, lineStyle) => {
+  const a = x2 - x1;
+  const b = y2 - y1;
+  const c = Math.sqrt(a ** 2 + b ** 2);
+  const x1Offset = a * (r1 / c);
+  const y1Offset = b * (r1 / c);
+
+  const x2Offset = a * (r2 / c);
+  const y2Offset = b * (r2 / c);
+
   const [color, width] = lineStyle;
   ctx.beginPath();
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
+  ctx.moveTo(x1 + x1Offset, y1 + y1Offset);
+  ctx.lineTo(x2 - x2Offset, y2 - y2Offset);
   ctx.strokeStyle = color;
   ctx.lineWidth = width;
   ctx.stroke();

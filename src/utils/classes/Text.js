@@ -3,6 +3,7 @@ export class Text {
     this.x = x;
     this.y = y;
     this.text = text;
+    this.splitedText = text.split(' ');
     this.font = font;
     this.textColor = textColor;
     this.textActiveColor = textActiveColor;
@@ -19,18 +20,28 @@ export class Text {
   startDrow() {
     this.ctx.font = this.font;
     this.ctx.textAlign = 'center';
-    this.ctx.textBaseline = 'middle';
+    this.ctx.textBaseline = 'top';
   }
 
   styleText() {
     this.ctx.fillStyle = this.textColor;
   }
 
+  getHeight() {
+    return this.splitedText.length * this.lineHeight + 6;
+  }
+
+  getY() {
+    return this.y - this.getHeight() / 2;
+  }
+
+  getTextY() {
+    return this.getY() + 3;
+  }
+
   fillText() {
-    const lines = this.text.split(' ');
-    const y = lines.length > 1 ? this.y - (lines.length / 2) * this.lineHeight : this.y;
-    lines.forEach((w, i) => {
-      console.log();
+    const y = this.getTextY();
+    this.splitedText.forEach((w, i) => {
       this.ctx.fillText(w, this.x, y + this.lineHeight * i);
     });
   }

@@ -7,6 +7,10 @@ export const INTERNAL_TEXT_FONT = 'bold 10px sans-serif';
 export const INTERNAL_TEXT_COLOR = '#3A3A3A';
 export const INTERNAL_TEXT_ACTIVE_COLOR = '#3A3A3A';
 export const INTERNAL_TEXT_LINEHEIGHT = '10';
+export const INTERNAL_TEXT_BACKGROUND = 'rgba(255,255,255,0.5)';
+export const INTERNAL_TEXT_BORDER_COLOR = '#F4F4F4';
+export const INTERNAL_TEXT_BORDER_WIDTH = '1';
+export const INTERNAL_TEXT_BORDER_RADIUS = '6';
 
 export const EXTERNAL_RADIUS = 267;
 export const EXTERNAL_LINE_WIDTH = 2.35;

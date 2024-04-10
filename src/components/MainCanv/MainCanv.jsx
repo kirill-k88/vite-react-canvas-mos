@@ -15,6 +15,7 @@ import {
 } from '../../utils/functions/functions';
 import { Text } from '../../utils/classes/Text';
 import { SkillCircle } from '../../utils/classes/SkillCircle';
+import { JobText } from '../../utils/classes/JobText';
 
 export const MainCanv = () => {
   const canvas = useRef();
@@ -23,7 +24,7 @@ export const MainCanv = () => {
   const externalCircle = getExternalCircle();
 
   const jobCircles = getJobs().map(j => new JobCircle(j, true));
-  const jobTexts = getJobTextParams().map(j => new Text(j, true));
+  const jobTexts = getJobTextParams().map(j => new JobText(j, true));
   const skills = getAllSkills();
   const skillDictionary = getSkillDictionary(skills);
   const skillCircles = getSkillsParams(skills, skillDictionary).map(j => new SkillCircle(j, true));
@@ -55,5 +56,10 @@ export const MainCanv = () => {
     };
   }, []);
 
-  return <canvas ref={canvas} className={styles.canv} />;
+  return (
+    <canvas
+      ref={canvas}
+      className={styles.canv}
+    />
+  );
 };
