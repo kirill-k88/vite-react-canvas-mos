@@ -1,1 +1,0 @@
-# vite-react-canvas-mos
