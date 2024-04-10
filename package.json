@@ -1,12 +1,12 @@
 {
-  "name": "react-canvas-mos",
+  "name": "vite-react-canvas-mos",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://kirill-k88.github.io/vite-react-canvas-mos/",
   "scripts": {
     "start": "vite",
-    "build": "vite build",
+    "build": "vite build --base=./",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
